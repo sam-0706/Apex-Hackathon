@@ -1,4 +1,4 @@
-### Update main.py
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apis.faq_api import router as faq_router

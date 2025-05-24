@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,Request
 from pydantic import BaseModel
 from typing import List
 from core_modules.faq_bot_qdrant import _get_llm_response
+from core_modules.serviceroutes import getalljobs,get_resumes_by_job,add_job,add_resume
 
 router = APIRouter()
 
