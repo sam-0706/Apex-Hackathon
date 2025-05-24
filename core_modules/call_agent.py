@@ -15,7 +15,7 @@ def run_call_agent(phone_number: str) -> dict:
     call_payload = {
         "phone_number": phone_number,
         "task": (
-            "You are Alex from HR at XYZ Corp. Call the candidate to discuss their recent application "
+            "You are Alex from HR at Meta. Call the candidate to discuss their recent application "
             "for the job position. Greet the candidate and ask the following details clearly, waiting "
             "for their response before proceeding to the next:\n\n"
             "1. Current location\n"
