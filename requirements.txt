@@ -3,6 +3,7 @@ python-dotenv
 PyMuPDF
 Pillow
 numpy
+scikit-learn
 pymongo
 langchain_openai
 qdrant_client
