@@ -29,12 +29,12 @@ def get_resumes_by_job(job_id):
     return documents[0]["resumes"]
 
 
-def add_job(job_id, job_description):
+def add_job(job_id, job_description,jobname):
     db = client["jobs"]
     collection = db["job_id_mapping"]
     collection.update_one(
         {"job_id": job_id},  
-        {"$set": {"job_description": job_description}},  
+        {"$set": {"job_description": job_description,"job_name":jobname}},  
         upsert=True  
     )
     return {"message": "Job added successfully"}

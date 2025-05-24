@@ -31,7 +31,7 @@ async def get_job_by_id(job_id: str):
 @router.post("/add_job")
 async def add_new_job(request: Request):
     response =  await request.json()
-    response = add_job(response['job_id'], response['job_description'])
+    response = add_job(response['job_id'], response['job_description'] , response['job_name'])
     return response
 
 @router.post("/add_resume")
