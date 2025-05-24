@@ -2,7 +2,7 @@ from fastapi import APIRouter,Request
 from pydantic import BaseModel
 from typing import List
 from core_modules.faq_bot_qdrant import _get_llm_response
-from core_modules.serviceroutes import getalljobs,get_resumes_by_job,add_job,add_resume
+from core_modules.serviceroutes import getalljobs,get_resumes_by_job,add_job,add_resume,send_mail
 
 router = APIRouter()
 
@@ -37,5 +37,21 @@ async def add_new_job(request: Request):
 @router.post("/add_resume")
 async def add_new_resume(request: Request):
     response =  await request.json()
-    response = add_resume(response['job_id'], response['resume'], response['name'])
+    response = add_resume(response['job_id'], response['resume'], response['name'],response['email'])
+    return response
+
+@router.post("/send_email")
+async def send_email(request: Request):
+    request =  await request.json()
+    response = send_mail(sender_email="rahultejmora18@gmail.com",
+                        sender_password="wcbo xeye rjie fatl",
+                        candidate_email=request["Email"],
+                        candidate_name= request["Name"],
+                        position=request["Position"],
+                        interview_date= request["Date"],
+                        interview_time= request["Time"],
+                        interview_location= "Remote",
+                        status= request["Status"],
+                        feedback_message=request.get("Feedback", "")
+                        )
     return response
