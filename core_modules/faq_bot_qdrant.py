@@ -40,7 +40,7 @@ Use the following context to answer the user's question as accurately and concis
 {retrieved_context}
 
 Respond ONLY using the context above. If the answer is not found, say:
-"I'm sorry, I couldn't find that in the company policy,please mail hr@comapny.com"
+"tell something relavant to the company TechNova Solutions Pvt. Ltd and at the end mention this for futher assitance,please mail hr@comapny.com"
 """
     })
 
