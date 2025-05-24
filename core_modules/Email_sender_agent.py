@@ -45,8 +45,10 @@ Best regards,
     "feedback": {
         "subject": "Application Feedback - {company_name}",
         "body": """Dear {candidate_name},
+        and please use this meeting link:https://meet.google.com/pej-iozn-nrr
 
 Thank you for your application for the {position} position at {company_name}.
+
 
 {custom_feedback}
 
