@@ -1,7 +1,7 @@
 ### apis/call_agents.py
 from fastapi import APIRouter
 from pydantic import BaseModel
-from core.call_agent import run_call_agent
+from core_modules.call_agent import run_call_agent
 
 router = APIRouter()
 
