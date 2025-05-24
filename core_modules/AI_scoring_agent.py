@@ -1,15 +1,20 @@
 import os
-import time
-from dotenv import load_dotenv
-from openai import OpenAI  # Make sure you have the new openai package version installed
 import json
-import warnings
-warnings.simplefilter("ignore", RuntimeWarning)
-load_dotenv(override=True)
+import time
+from functools import lru_cache
+import openai  # pip install openai
+from dotenv import load_dotenv  # pip install python-dotenv
 
+# ─── ENV SETUP ─────────────────────────────────────────────────────────────
+load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+if not OPENAI_API_KEY:
+    raise RuntimeError("❗ ERROR: OPENAI_API_KEY not found. Check your .env file!")
+
 LLM_MODEL = "gpt-4o"
 
+# ─── PROMPT SETUP ──────────────────────────────────────────────────────────
 SYS_PROMPT = """\
 You are an expert recruiter AI system.
 
@@ -51,15 +56,22 @@ RESUME:
 
 Remember: only return a JSON like {{ "score": N }} where N is between 0 and 10.
 """
-def get_openai_client():
-    return OpenAI(api_key=OPENAI_API_KEY)
 
+# ─── OPENAI CLIENT ─────────────────────────────────────────────────────────
+@lru_cache(maxsize=1)
+def _client():
+    return openai.OpenAI(api_key=OPENAI_API_KEY)
+
+# ─── PUBLIC FUNCTION ───────────────────────────────────────────────────────
 def score_resume_vs_jd(jd_txt: str, res_txt: str) -> float:
-    start = time.time()
-    client = get_openai_client()
-
+    """
+    Compares a job description and a resume using GPT-4o.
+    Returns:
+        final_score: float (0–10)
+    """
+    t0 = time.time()
     try:
-        response = client.chat.completions.create(
+        resp = _client().chat.completions.create(
             model=LLM_MODEL,
             messages=[
                 {"role": "system", "content": SYS_PROMPT},
@@ -67,20 +79,26 @@ def score_resume_vs_jd(jd_txt: str, res_txt: str) -> float:
             ],
             max_tokens=30,
             temperature=0.0,
-            # no json_schema param here
-        )
+        ).choices[0].message.content.strip()
 
-        content = response.choices[0].message.content.strip()
-        val = json.loads(content)
-        score = float(val.get("score", 5.0))
-        score = max(0.0, min(10.0, score))
+        val = json.loads(resp)["score"]
+        raw_score = float(val)
+        normalized_score = max(0.0, min(10.0, raw_score)) / 10.0
+        final_score = round(normalized_score * 10, 2)
 
     except Exception as e:
-        score = 5.0
-    return round(score, 2)
+        print(f"[AI scorer] Fallback error: {e} → returning neutral 5.0")
+        final_score = 5.0
+
+    finally:
+        print(f"[AI scorer] Total time: {time.time() - t0:.1f}s")
+
+    return final_score
 
 
+# ─── RUN AS STANDALONE SCRIPT ──────────────────────────────────────────────
 # if __name__ == "__main__":
+#     print("Scoring JD vs. Resume...")
 
 #     jd_text = "Paste your JD here..."
 #     resume_text = "Paste your resume here..."
