@@ -17,8 +17,8 @@ def bert_similarity(doc1: str, doc2: str) -> float:
 
     # Compute cosine similarity
     similarity = util.cos_sim(embeddings[0], embeddings[1])
-
-    return similarity.item()
+    normalized_similarity = (similarity.item() + 1) / 2
+    return normalized_similarity
 
 # doc1 = "Machine learning is a field of artificial intelligence."
 # doc2 = "Artificial intelligence includes machine learning as a subset."
