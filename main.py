@@ -1,28 +1,30 @@
+### Update main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from apis.faq_api import router as faq_router
+from apis.call_agents import router as call_agent_router
 
 app = FastAPI(
     title="TechNova HR FAQ Bot",
     version="1.0.0"
 )
 
-# Enable CORS for all origins (for development/demo purposes)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-# Mount router
 app.include_router(faq_router, prefix="/api")
+app.include_router(call_agent_router, prefix="/api")
 
 @app.get("/")
 def root():
     return {
         "message": "TechNova HR FAQ Bot is running ✅",
-        "try_post": "/api/faq",
+        "try_post_faq": "/api/faq",
+        "try_post_call": "/api/call-agent",
         "docs": "/docs"
     }
