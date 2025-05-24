@@ -5,7 +5,7 @@ from qdrant_client import QdrantClient
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(override=True)
 
 # -------------------------------
 # Hardcoded Config Values
@@ -24,4 +24,4 @@ llm = ChatOpenAI(
     model="gpt-4o-mini",
     api_key=os.getenv("open_api_key"),
 )
-print("loading done")
+# print("loading done")

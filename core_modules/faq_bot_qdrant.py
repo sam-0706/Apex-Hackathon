@@ -88,21 +88,21 @@ def _get_llm_response(chat_history: List[str], current_question: str) -> Tuple[s
 
 
 # import your existing _get_llm_response function from your module if needed
-# from your_module_name import _get_llm_response
+# # from your_module_name import _get_llm_response
 
-# Sample chat history (can be empty or filled)
-chat_history = [
-    "What is the company's leave policy?",
-    "How many casual leaves are allowed per year?"
-]
+# # Sample chat history (can be empty or filled)
+# chat_history = [
+#     "What is the company's leave policy?",
+#     "How many casual leaves are allowed per year?"
+# ]
 
-# New question to get an answer for
-current_question = "how many leaves are provided"
+# # New question to get an answer for
+# current_question = "how many leaves are provided"
 
-# Call the LLM function and print the result
-response, duration = _get_llm_response(chat_history, current_question)
+# # Call the LLM function and print the result
+# response, duration = _get_llm_response(chat_history, current_question)
 
-print("🧠 LLM Response:\n", response)
-print(f"⏱️ Time Taken: {duration:.2f} seconds")
+# print("🧠 LLM Response:\n", response)
+# print(f"⏱️ Time Taken: {duration:.2f} seconds")
 
 

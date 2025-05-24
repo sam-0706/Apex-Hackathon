@@ -3,4 +3,5 @@ python-dotenv
 PyMuPDF
 Pillow
 numpy
-
+langchain_openai
+qdrant_client

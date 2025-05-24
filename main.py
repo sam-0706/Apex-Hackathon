@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from apis.faq_api import router as faq_router
 
@@ -16,3 +17,5 @@ def root():
         "try_post": "/api/faq",
         "docs": "/docs"
     }
+if __name__ == "__main__":
+    uvicorn.run("main:app", port=8000, reload=True)
