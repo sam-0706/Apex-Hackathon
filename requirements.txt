@@ -3,6 +3,7 @@ python-dotenv
 PyMuPDF
 Pillow
 numpy
+pymongo
 langchain_openai
 qdrant_client
 aiohappyeyeballs==2.6.1
